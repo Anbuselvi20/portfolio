@@ -1,10 +1,12 @@
-/* Configure your personal and project links here. Leave a value empty until it is ready. */
+/* Replace values with public links you want to share. Leave optional project URLs empty to hide those links. */
 const PORTFOLIO_LINKS = {
+  // Contact details supplied by Anbuselvi.
   email: 'anbuselvi204199@gmail.com',
   linkedin: 'www.linkedin.com/in/anbuselvi-aandisamy-537388186',
   github: 'https://github.com/Anbuselvi20',
   phone: '8939367768',
   resume: 'Anbuselvi_SpringBoot_Microservices_Resume_pdf.pdf',
+  // Add public demo or repository URLs only; do not link confidential work.
   hotelProject: '',
   paymentProject: '',
   portalProject: ''
@@ -29,31 +31,45 @@ const emptyPayload = `{
 
 function setConfiguredLinks() {
   document.querySelectorAll('[data-link]').forEach((link) => {
-    const value = PORTFOLIO_LINKS[link.dataset.link];
-    if (!value) return;
+    const key = link.dataset.link;
+    const value = PORTFOLIO_LINKS[key].trim();
+    const isProjectLink = link.classList.contains('project-link');
+    const label = link.querySelector('strong') || link.firstChild;
+    if (!value) {
+      link.removeAttribute('href');
+      link.setAttribute('aria-disabled', 'true');
+      link.tabIndex = -1;
+      if (isProjectLink) {
+        link.hidden = true;
+      } else {
+        label.textContent = link.dataset.placeholder;
+      }
+      return;
+    }
 
-    if (link.dataset.link === 'email') {
+    if (key === 'email') {
       link.href = `mailto:${value}`;
-    } else if (link.dataset.link === 'phone') {
+    } else if (key === 'phone') {
       link.href = `tel:${value.replace(/[^\d+]/g, '')}`;
-    } else if (link.dataset.link === 'linkedin' && !/^https?:\/\//i.test(value)) {
+    } else if ((key === 'linkedin' || key === 'github') && !/^https?:\/\//i.test(value)) {
       link.href = `https://${value}`;
     } else {
       link.href = value;
     }
+    link.hidden = false;
     link.removeAttribute('aria-disabled');
     link.removeAttribute('tabindex');
-    if (link.dataset.link === 'email' || link.dataset.link === 'phone') {
-      link.querySelector('strong').textContent = value;
+    if (key === 'email' || key === 'phone') {
+      label.textContent = value;
     } else {
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
-      if (link.dataset.link === 'linkedin' || link.dataset.link === 'github') {
-        link.querySelector('strong').textContent = 'Open profile';
-      } else if (link.dataset.link === 'resume') {
-        link.querySelector('strong').textContent = 'View resume';
-      } else if (link.dataset.link !== 'phone') {
-        link.querySelector('strong').textContent = 'View project';
+      if (key === 'linkedin' || key === 'github') {
+        label.textContent = 'Open profile';
+      } else if (key === 'resume') {
+        label.textContent = 'View resume';
+      } else {
+        label.textContent = 'View project';
       }
     }
   });
@@ -216,6 +232,7 @@ async function emitSampleEvent() {
   if (flowIsRunning) return;
   flowIsRunning = true;
   emitButton.disabled = true;
+  emitButton.setAttribute('aria-busy', 'true');
   eventSequence += 1;
   const eventId = `demo-${String(eventSequence).padStart(3, '0')}`;
   flowStages.forEach((stage) => stage.classList.remove('active', 'complete'));
@@ -237,12 +254,19 @@ async function emitSampleEvent() {
 
   eventState.textContent = 'COMPLETE';
   appendEventLog(`${eventId} processed by consumer · demo only`, true);
+  emitButton.removeAttribute('aria-busy');
   emitButton.disabled = false;
   flowIsRunning = false;
 }
 
 const menuToggle = document.querySelector('.menu-toggle');
 const primaryNav = document.querySelector('#primary-nav');
+function closeMobileNavigation() {
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.setAttribute('aria-label', 'Open navigation');
+  primaryNav.classList.remove('is-open');
+}
+
 menuToggle.addEventListener('click', () => {
   const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
   menuToggle.setAttribute('aria-expanded', String(!isExpanded));
@@ -252,9 +276,14 @@ menuToggle.addEventListener('click', () => {
 
 primaryNav.addEventListener('click', (event) => {
   if (event.target.closest('a')) {
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.setAttribute('aria-label', 'Open navigation');
-    primaryNav.classList.remove('is-open');
+    closeMobileNavigation();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && menuToggle.getAttribute('aria-expanded') === 'true') {
+    closeMobileNavigation();
+    menuToggle.focus();
   }
 });
 

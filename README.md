@@ -22,13 +22,21 @@ Open `script.js` and update `PORTFOLIO_LINKS`:
 - `phone`: your public phone number (without `tel:`).
 - `linkedin` and `github`: your full profile URLs.
 - `resume`: a public resume URL. For a local file, add your PDF to this folder (for example, `resume.pdf`) and set the value to `'resume.pdf'`.
-- `hotelProject`, `paymentProject`, and `portalProject`: optional public project URLs. Leave these empty if you cannot share the work.
+- `hotelProject`, `paymentProject`, and `portalProject`: optional public repository or demo URLs. Leave these empty if you cannot share the work; the matching project links will stay hidden.
 
-The email, phone, profile, and resume links are configured. The resume PDF is `Anbuselvi_SpringBoot_Microservices_Resume_pdf.pdf`. Project links are optional. Use public links only; do not add employer source code, credentials, or confidential project details.
+The email, phone, profile, and resume entries currently contain the values supplied for this portfolio. The resume PDF is `Anbuselvi_SpringBoot_Microservices_Resume_pdf.pdf`. Project URLs have not been provided and are intentionally empty. Use public links only; do not add employer source code, credentials, or confidential project details.
+
+## Privacy before publishing
+
+The configured phone number, email address, profile URLs, portrait (`profile.jpg`), and resume PDF are public to anyone who can access the published repository or site. Remove or replace any detail you do not want public before publishing. In particular, review the resume PDF for personal contact details and other information before committing it; if you do not want the PDF public, remove it from the repository and set `resume` to an empty string.
+
+## Files for GitHub Pages
+
+Commit the site files `index.html`, `style.css`, `script.js`, and `profile.jpg`. Include `Anbuselvi_SpringBoot_Microservices_Resume_pdf.pdf` only if you want the resume downloadable publicly. `README.md` is useful documentation but is not required for the page to run.
 
 ## Publish with GitHub Pages
 
-1. Create a GitHub repository for the portfolio and add `index.html`, `style.css`, `script.js`, and `README.md` to its root.
+1. Create a GitHub repository for the portfolio and add the files listed in **Files for GitHub Pages** to its root.
 2. Push the files to the repository's default branch.
 3. In the repository, open **Settings > Pages**.
 4. Under **Build and deployment**, select **Deploy from a branch**.

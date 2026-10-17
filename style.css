@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
-
 :root {
   color-scheme: dark;
   --ink: #07111f;
@@ -160,7 +158,7 @@ h1, h2, h3 { font-family: var(--font-display); }
 .project-points li { position: relative; padding: 3px 0 3px 15px; }
 .project-points li::before { position: absolute; top: 11px; left: 0; width: 5px; height: 1px; background: var(--mint); content: ''; }
 .project-link { min-height: 34px; margin-top: 16px; display: inline-flex; align-items: center; gap: 12px; color: var(--blue); font-size: 11px; font-weight: 600; }
-.project-link[aria-disabled="true"] { color: #718c9f; cursor: not-allowed; }
+.project-link[hidden] { display: none; }
 .payment-lanes { display: grid; grid-template-columns: 1fr 15px 1fr 15px 1fr; align-items: center; gap: 2px; }
 .lane-arrow { color: var(--mint); font-family: var(--font-mono); font-size: 10px; text-align: center; }
 .payment-base { margin-top: 17px; display: flex; justify-content: space-between; color: var(--mint); font-family: var(--font-mono); font-size: 8px; }
@@ -201,7 +199,6 @@ h1, h2, h3 { font-family: var(--font-display); }
 .response-status.status-ok { color: var(--mint); }
 .response-status.status-error { color: var(--coral); }
 .response-output { min-height: 105px; max-height: 220px; margin: 0; padding: 11px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
-.response-output code { color: #b9dfd1; }
 .demo-disclaimer { margin: 10px 0 0; color: #8093a2; font-size: 9px; }
 .event-summary { padding: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid #1d3449; background: #0e2032; }
 .event-summary .field-label { margin-bottom: 4px; }
